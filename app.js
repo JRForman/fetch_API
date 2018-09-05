@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var bluebird = require('bluebird');
 
 module.exports = app; // for testing
-var MONGODB_URI = process.env.MONGODB_URI
+var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/userList'
 
 var config = {
   appRoot: __dirname // required config

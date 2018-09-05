@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var bluebird = require('bluebird');
 
 module.exports = app; // for testing
+var MONGODB_URI = process.env.MONGODB_URI
 
 var config = {
   appRoot: __dirname // required config
@@ -19,7 +20,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   var port = process.env.PORT || 8080;
   mongoose.Promise = bluebird;
-  mongoose.connect('mongodb://localhost/userList');
+  mongoose.connect(MONGODB_URI);
   mongoose.connection.on('error', console.error.bind(console, 'connection errror:'))
   mongoose.connection.once('open', function(){
     app.listen(port);

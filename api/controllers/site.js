@@ -1,7 +1,6 @@
 'use strict';
 var User = require('../../models/users');
 var Site = require('../../models/site');
-var Comments = require('../../models/comments');
 var parsePhone = require('libphonenumber-js');
 
 module.exports = {
@@ -12,18 +11,10 @@ module.exports = {
         var { siteName, typeOf, googleID, website, phone, image, address, bones, voteCount } = req.swagger.params.site.value;
         phone = parsePhone.formatNumber({ country: 'US', phone: phone }, 'National');
         var site = new Site({ siteName, typeOf, googleID, website, phone, image, address, bones, voteCount });
-        site.save().then(function () {
+        site.save().then(function (newSite) {
             console.log("save successful");
             res.json({
-                siteName,
-                typeOf,
-                googleID,
-                website,
-                phone,
-                image,
-                address,
-                bones,
-                voteCount
+                newSite
             }).end();
         },
             function (err) {
@@ -37,9 +28,9 @@ module.exports = {
     },
     deleteSite: function (req, res) {
         console.log("--------------------------------------");
-        var { siteName, typeOf, googleID, website, phone, image, address, bones, voteCount } = req.swagger.params.site.value;
+        var { siteName, typeOf, googleID, website, phone, image, address, bones, voteCount, _id } = req.swagger.params.site.value;
         phone = parsePhone.formatNumber({ country: 'US', phone: phone }, 'National');
-        var site = { siteName, typeOf, googleID, website, phone, image, address, bones, voteCount };
+        var site = { siteName, typeOf, googleID, website, phone, image, address, bones, voteCount, _id };
         Site.findOne({ site })
             .remove()
             .exec(function (err) {

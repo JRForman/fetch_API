@@ -14,7 +14,6 @@ tags:
   description: "Operations available to regular developers"
 schemes:
   # tip: remove http to make production-grade
-  - http
   - https
 # format of bodies a client can send (Content-Type)
 consumes:
@@ -22,7 +21,159 @@ consumes:
 # format of the responses to the client (Accepts)
 produces:
   - application/json
+# securityDefinitions:
+#   UserSecurity:
+#     type: "apiKey"
+#     in: header
+#     name: SIMPLE-API-KEY
+#   AdminSecurity:
+#     type: apiKey
+#     in: header
+#     name: ADMIN-API-KEY
 paths:
+  /site:
+    x-swagger-router-controller: site
+    get:
+      tags:
+      - "developers"
+      summary: "Get List of sites"
+      operationId: "searchSites"
+      parameters:
+        - in: query
+          required: false
+          name: zip
+          type: integer
+          description: "search based on zip code for site"
+        - in: query
+          required: false
+          name: bones
+          type: integer
+          description: "search based on review score"
+        - in: query
+          required: false
+          name: typeOf
+          type: string
+          description: "search based on type of site"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/SearchSites"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      tags:
+      - "admins"
+      summary: "Add new site"
+      operationId: "postNewSite"
+      parameters:
+        - name: site
+          in: body
+          schema:
+            $ref: "#/definitions/Site"
+      responses:
+        200:
+          description: "Sucessfully added site"
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponseJSON"
+    delete:
+      tags:
+      - "admins"
+      summary: "Delete site"
+      operationId: "deleteSite"
+      parameters:
+        - name: site
+          in: body
+          schema:
+            $ref: "#/definitions/Site"
+      responses:
+        200:
+          description: "Sucessfully deleted site"
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponseJSON"
+  /comments:
+    x-swagger-router-controller: comments
+    post:
+      tags:
+      - "developers"
+      summary: "Add comments"
+      operationId: "addComment"
+      parameters:
+        - name: comment
+          in: body
+          required: true
+          description: "Add user review in comments to site"
+          schema:
+            $ref: "#/definitions/Site"
+      responses:
+        200:
+          description: "Sucessfully updated site with comment"
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /bones:
+    x-swagger-router-controller: bones
+    post:
+      tags:
+      - "developers"
+      summary: "Add bones"
+      operationId: "addBones"
+      # security:
+      # - UserSecurity: []
+      # x-security-scopes: 
+      # - developers  
+      parameters:
+        - name: site
+          in: body
+          required: true
+          description: "Add user review in bones to site"
+          schema:
+            $ref: "#/definitions/Site"
+      responses:
+        200:
+          description: "Sucessfully updated bones"
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      tags:
+      - "developers"
+      summary: "Take bones"
+      operationId: "takeBones"
+      parameters:
+        - name: site
+          in: body
+          required: true
+          description: "Take user review in bones to site"
+          schema:
+            $ref: "#/definitions/Site"
+      responses:
+        200:
+          description: "Sucessfully updated bones"
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /user:
     x-swagger-router-controller: users
     get:
@@ -104,6 +255,14 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/User"
+  SearchSites:
+    required:
+      - sites
+    properties:
+      sites:
+        type: array
+        items:
+          $ref: "#/definitions/Site"
   User:
     required:
       - name
@@ -115,11 +274,52 @@ definitions:
       email:
         type: string
         description: User email
+  Site:
+    required:
+      - siteName
+    properties:
+      siteName:
+        type: string
+      typeOf:
+        type: string
+      googleID:
+        type: string
+      website:
+        type: string
+      phone:
+        type: string
+      image:
+        type: string
+      address:
+        type: object
+        properties:
+          street:
+            type: string
+          city:
+            type: string
+          state:
+            type: string
+          zip:
+            type: number
+      bones:
+        type: number
+      voteCount:
+        type: number
+
   ErrorResponse:
     required:
       - message
     properties:
       message:
         type: string
-  
-      
+
+  ErrorResponseJSON:
+    required:
+      - message
+    properties:
+      message:
+        type: object
+
+# security:
+#   - apiKey: ["himom"]
+#     appId: []

@@ -8,9 +8,9 @@ module.exports = {
 
     postNewSite: function (req, res) {
         console.log("--------------------------------------");
-        var { siteName, typeOf, googleID, website, phone, image, address, bones, voteCount } = req.swagger.params.site.value;
+        var { siteName, typeOf, googleID, website, phone, image, address, paws, voteCount } = req.swagger.params.site.value;
         phone = parsePhone.formatNumber({ country: 'US', phone: phone }, 'National');
-        var site = new Site({ siteName, typeOf, googleID, website, phone, image, address, bones, voteCount });
+        var site = new Site({ siteName, typeOf, googleID, website, phone, image, address, paws, voteCount });
         site.save().then(function (newSite) {
             console.log("save successful");
             res.json({
@@ -28,9 +28,9 @@ module.exports = {
     },
     deleteSite: function (req, res) {
         console.log("--------------------------------------");
-        var { siteName, typeOf, googleID, website, phone, image, address, bones, voteCount, _id } = req.swagger.params.site.value;
+        var { siteName, typeOf, googleID, website, phone, image, address, paws, voteCount, _id } = req.swagger.params.site.value;
         phone = parsePhone.formatNumber({ country: 'US', phone: phone }, 'National');
-        var site = { siteName, typeOf, googleID, website, phone, image, address, bones, voteCount, _id };
+        var site = { siteName, typeOf, googleID, website, phone, image, address, paws, voteCount, _id };
         Site.findOne({ site })
             .remove()
             .exec(function (err) {
@@ -45,16 +45,16 @@ module.exports = {
     },
 
     searchSites: function (req, res) {
-        // var {zip, typeOf, bones } = req.swagger.params.typeOf.value || null;
+        // var {zip, typeOf, paws } = req.swagger.params.typeOf.value || null;
         var typeOf = req.swagger.params.typeOf.value || null;
         var zip = req.swagger.params.zip.value || null;
-        var bones = req.swagger.params.bones.value || null;
+        var paws = req.swagger.params.paws.value || null;
         var city = req.swagger.params.city.value || null;
 
         var query = {};
         if (typeOf) { query.typeOf = typeOf.toUpperCase() };
         if (zip) { query["address.zip"] = zip };
-        if (bones) { query.bones = {$gt:bones}};
+        if (paws) { query.paws = {$gt:paws}};
         if (city){query["address.city"] = city};
         Site.find(query)
         .populate("comments")

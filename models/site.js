@@ -52,7 +52,7 @@ module.exports = mongoose.model('Site', new mongoose.Schema({
             require: true
         },
     },
-    bones: {
+    paws: {
         type: Number,
         require: true,
         default: 0

@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 
 module.exports = {
     addComment: function (req, res) {
-        var { _id, siteName, typeOf, googleID, website, phone, image, address, bones, voteCount, comments, user } = req.swagger.params.comment.value;
+        var { _id, siteName, typeOf, googleID, website, phone, image, address, paws, voteCount, comments, user } = req.swagger.params.comment.value;
         if(!user){user = "Anonymous"}
         Comments.create({ comments, user })
             .then(function (comments) {

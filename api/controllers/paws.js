@@ -3,14 +3,14 @@ var User = require('../../models/users');
 var Site = require('../../models/site');
 
 module.exports = {
-    addBones: function (req, res) {
-        var { id, siteName, typeOf, googleID, website, phone, image, address, bones, voteCount } = req.swagger.params.site.value || "Not defined";
-        if ((bones === undefined) || (siteName === undefined)) {
+    addpaws: function (req, res) {
+        var { id, siteName, typeOf, googleID, website, phone, image, address, paws, voteCount } = req.swagger.params.site.value || "Not defined";
+        if ((paws === undefined) || (siteName === undefined)) {
             var err = { "message": "Incorect body" };
             res.status(500).json(err).end();
             return;
         }
-        if (bones < 0 || bones > 5) {
+        if (paws < 0 || paws > 5) {
             var err = { "message": "Review out of range" };
             res.status(500).json(err).end();
             return;
@@ -20,12 +20,12 @@ module.exports = {
                 res.status(500).json(err).end();
                 return;
             }
-            var currentBones = site.bones;
+            var currentpaws = site.paws;
             var currentCount = site.voteCount;
-            var currentTotal = currentBones * currentCount;
-            var newBones = ((bones + currentTotal) / (currentCount + 1)).toFixed(2);
+            var currentTotal = currentpaws * currentCount;
+            var newpaws = ((paws + currentTotal) / (currentCount + 1)).toFixed(2);
             var newCount = currentCount + 1;
-            site.bones = newBones;
+            site.paws = newpaws;
             site.voteCount = newCount;
             site.save();
         }).then(function () {
@@ -34,15 +34,15 @@ module.exports = {
         );
     },
 
-    takeBones: function (req, res) {
+    takepaws: function (req, res) {
         // console.log(req.swagger.params)
-        var { id, siteName, typeOf, googleID, website, phone, image, address, bones, voteCount } = req.swagger.params.site.value || "Not defined";
-        if ((bones === undefined) || (siteName === undefined)) {
+        var { id, siteName, typeOf, googleID, website, phone, image, address, paws, voteCount } = req.swagger.params.site.value || "Not defined";
+        if ((paws === undefined) || (siteName === undefined)) {
             var err = { "message": "Incorect body" };
             res.status(500).json(err).end();
             return;
         }
-        if (bones < 0 || bones > 5) {
+        if (paws < 0 || paws > 5) {
             var err = { "message": "Review out of range" };
             res.status(500).json(err).end();
             return;
@@ -52,12 +52,12 @@ module.exports = {
                 res.status(500).json(err).end();
                 return;
             }
-            var currentBones = site.bones;
+            var currentpaws = site.paws;
             var currentCount = site.voteCount;
-            var currentTotal = currentBones * currentCount;
-            var newBones = ((currentTotal - bones) / (currentCount - 1)).toFixed(2);
+            var currentTotal = currentpaws * currentCount;
+            var newpaws = ((currentTotal - paws) / (currentCount - 1)).toFixed(2);
             var newCount = currentCount - 1;
-            site.bones = newBones;
+            site.paws = newpaws;
             site.voteCount = newCount;
             site.save();
         }).then(function () {

@@ -46,7 +46,7 @@ paths:
           description: "search based on zip code for site"
         - in: query
           required: false
-          name: bones
+          name: paws
           type: integer
           description: "search based on review score"
         - in: query
@@ -153,13 +153,13 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /bones:
-    x-swagger-router-controller: bones
+  /paws:
+    x-swagger-router-controller: paws
     post:
       tags:
       - "developers"
-      summary: "Add bones"
-      operationId: "addBones"
+      summary: "Add paws"
+      operationId: "addpaws"
       # security:
       # - UserSecurity: []
       # x-security-scopes: 
@@ -168,12 +168,12 @@ paths:
         - name: site
           in: body
           required: true
-          description: "Add user review in bones to site"
+          description: "Add user review in paws to site"
           schema:
             $ref: "#/definitions/Site"
       responses:
         200:
-          description: "Sucessfully updated bones"
+          description: "Sucessfully updated paws"
           schema:
             type: string
         default:
@@ -183,18 +183,18 @@ paths:
     delete:
       tags:
       - "developers"
-      summary: "Take bones"
-      operationId: "takeBones"
+      summary: "Take paws"
+      operationId: "takepaws"
       parameters:
         - name: site
           in: body
           required: true
-          description: "Take user review in bones to site"
+          description: "Take user review in paws to site"
           schema:
             $ref: "#/definitions/Site"
       responses:
         200:
-          description: "Sucessfully updated bones"
+          description: "Sucessfully updated paws"
           schema:
             type: string
         default:
@@ -328,7 +328,7 @@ definitions:
             type: string
           zip:
             type: number
-      bones:
+      paws:
         type: number
       voteCount:
         type: number

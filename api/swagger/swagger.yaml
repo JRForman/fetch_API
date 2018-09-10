@@ -291,7 +291,6 @@ definitions:
         items:
           $ref: "#/definitions/Site"
   User:
-  username, email, password, company, usage
     required:
       - username
       - email

@@ -10,8 +10,9 @@ module.exports = {
     addComment: function (req, res) {
         var site = req.swagger.params;
         console.log(site);
-        var { _id, siteName, typeOf, googleID, website, phone, image, address, bones, voteCount, comments } = req.swagger.params.comment.value;
-        Comments.create({ comments })
+        var { _id, siteName, typeOf, googleID, website, phone, image, address, bones, voteCount, comments, user } = req.swagger.params.comment.value;
+        if(!user){user = "Anonymous"}
+        Comments.create({ comments, user })
             .then(function (comments) {
                 return Site.findOneAndUpdate({ siteName }, { $push: { comments: comments._id } }, { new: true });
             })

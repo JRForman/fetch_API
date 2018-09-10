@@ -131,6 +131,28 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    delete:
+      tags:
+      - "developers"
+      summary: "Delete comments"
+      operationId: "deleteComment"
+      parameters:
+        - name: comment
+          in: body
+          required: true
+          description: "Delete user comments from site"
+          schema:
+            $ref: "#/definitions/Comment"
+      responses:
+        200:
+          description: "Sucessfully deleted comment"
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /bones:
     x-swagger-router-controller: bones
     post:
@@ -310,6 +332,15 @@ definitions:
         type: number
       voteCount:
         type: number
+  Comment:
+    required:
+      - id
+    properties:
+      comment:
+        type: string
+      id:
+        type: string
+    
 
   ErrorResponse:
     required:

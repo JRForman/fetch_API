@@ -58,11 +58,13 @@ module.exports = {
         var typeOf = req.swagger.params.typeOf.value || null;
         var zip = req.swagger.params.zip.value || null;
         var bones = req.swagger.params.bones.value || null;
+        var city = req.swagger.params.city.value || null;
 
         var query = {};
         if (typeOf) { query.typeOf = typeOf.toUpperCase() };
-        if (zip) { query["address.zip"] = zip }
-        if (bones) { query.bones = bones };
+        if (zip) { query["address.zip"] = zip };
+        if (bones) { query.bones = {$gt:bones}};
+        if (city){query["address.city"] = city};
         Site.find(query)
         .populate("comments")
         .exec(function (err, sites) {

@@ -54,6 +54,11 @@ paths:
           name: typeOf
           type: string
           description: "search based on type of site"
+        - in: query
+          required: false
+          name: city
+          type: string
+          description: "search based on city of site"
       produces:
       - "application/json"
       responses:

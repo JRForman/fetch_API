@@ -291,20 +291,29 @@ definitions:
         items:
           $ref: "#/definitions/Site"
   User:
+  username, email, password, company, usage
     required:
-      - name
+      - username
       - email
     properties:
-      name:
+      username:
         type: string
         description: User name
       email:
         type: string
         description: User email
+      password:
+        type: string
+      company:
+        type: string
+      usage:
+        type: string
   Site:
     required:
       - siteName
     properties:
+      id:
+        type: string
       siteName:
         type: string
       typeOf:

@@ -18,7 +18,8 @@ module.exports = mongoose.model('Site', new mongoose.Schema({
     },
     googleID: {
         type: String,
-        require: false
+        require: false,
+        unique: true
     },
     website: {
         type: String,
@@ -35,7 +36,8 @@ module.exports = mongoose.model('Site', new mongoose.Schema({
     address: {
         street: {
             type: String,
-            require: true
+            require: true,
+            unique: true
         },
         city: {
             type: String,

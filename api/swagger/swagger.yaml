@@ -1,9 +1,9 @@
 swagger: "2.0"
 info:
-  version: "0.0.1"
+  version: "1.0.0"
   title: Fetch API
 # during dev, should point to your local machine
-host: 34.234.152.9
+# host: https://cryptic-springs-20095.herokuapp.com/api-docs/
 # basePath prefixes all resource paths 
 basePath: /
 # 

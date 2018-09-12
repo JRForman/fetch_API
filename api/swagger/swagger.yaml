@@ -3,7 +3,7 @@ info:
   version: "0.0.1"
   title: Fetch API
 # during dev, should point to your local machine
-host: https://cryptic-springs-20095.herokuapp.com/
+host: "https://cryptic-springs-20095.herokuapp.com/"
 # basePath prefixes all resource paths 
 basePath: /
 # 

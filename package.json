@@ -26,5 +26,9 @@
     "start": "node app.js",
     "test": "swagger project test",
     "watch": "nodemon app.js"
+  },
+  "engines": {
+    "node": "10.7.0",
+    "yarn": "1.9.4"
   }
 }

@@ -8,10 +8,12 @@ host: localhost:8080
 basePath: /
 # 
 tags:
-- name: "admins"
+- name: "Admins"
   description: "Secured Admin-only calls"
-- name: "developers"
+- name: "Developers"
   description: "Operations available to regular developers"
+- name: "ReadOnly"
+  description: "Read only calls to data."
 schemes:
   # tip: remove http to make production-grade
   - https
@@ -35,7 +37,7 @@ paths:
     x-swagger-router-controller: site
     get:
       tags:
-      - "developers"
+      - "ReadOnly"
       summary: "Get List of sites"
       operationId: "searchSites"
       parameters:
@@ -72,7 +74,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
     post:
       tags:
-      - "admins"
+      - "Developers"
       summary: "Add new site"
       operationId: "postNewSite"
       parameters:
@@ -91,7 +93,7 @@ paths:
             $ref: "#/definitions/ErrorResponseJSON"
     delete:
       tags:
-      - "admins"
+      - "Admins"
       summary: "Delete site"
       operationId: "deleteSite"
       parameters:
@@ -112,7 +114,7 @@ paths:
     x-swagger-router-controller: comments
     post:
       tags:
-      - "developers"
+      - "Developers"
       summary: "Add comments"
       operationId: "addComment"
       parameters:
@@ -133,7 +135,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
     delete:
       tags:
-      - "developers"
+      - "Admins"
       summary: "Delete comments"
       operationId: "deleteComment"
       parameters:
@@ -157,7 +159,7 @@ paths:
     x-swagger-router-controller: paws
     post:
       tags:
-      - "developers"
+      - "Developers"
       summary: "Add paws"
       operationId: "addpaws"
       # security:
@@ -182,7 +184,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
     delete:
       tags:
-      - "developers"
+      - "Developers"
       summary: "Take paws"
       operationId: "takepaws"
       parameters:
@@ -205,7 +207,7 @@ paths:
     x-swagger-router-controller: users
     get:
       tags:
-      - "admins"
+      - "Admins"
       summary: "Gets list of users"
       operationId: "listUsers"
       produces:
@@ -221,7 +223,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
     post:
       tags:
-      - "admins"
+      - "Admins"
       summary: "Add user to database"
       operationId: "createUser"
       parameters:
@@ -244,7 +246,7 @@ paths:
     # binds a127 app logic to a route
     x-swagger-router-controller: hello_world
     get:
-      description: Returns 'Hello' to the caller
+      description: Returns 'Hello' to the caller (for testing)
       # used as the method name of the controller
       operationId: hello
       parameters:
@@ -294,6 +296,7 @@ definitions:
     required:
       - username
       - email
+      - password
     properties:
       username:
         type: string
@@ -340,6 +343,8 @@ definitions:
         type: number
       voteCount:
         type: number
+      comments:
+        type: object
   Comment:
     required:
       - id

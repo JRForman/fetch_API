@@ -8,6 +8,7 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "bluebird": "^3.5.2",
     "express": "^4.12.3",
     "libphonenumber-js": "^1.4.5",
